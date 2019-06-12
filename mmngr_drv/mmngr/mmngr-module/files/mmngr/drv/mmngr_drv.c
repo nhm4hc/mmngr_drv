@@ -1302,10 +1302,8 @@ static int init_lossy_info(void)
 
 		/* Allocate bitmap for entry */
 		bm_lossy = kzalloc(sizeof(struct BM), GFP_KERNEL);
-		if (bm_lossy == NULL) {
-			ret = -ENOMEM;
+		if (bm_lossy == NULL)
 			break;
-		}
 
 		ret = alloc_bm(bm_lossy, start, end - start, MM_CO_ORDER);
 		if (ret)
