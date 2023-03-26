@@ -592,6 +592,9 @@ static int mm_ioc_alloc(struct device *mm_dev,
 {
 	int		ret = 0;
 	struct MM_PARAM	tmp;
+#ifdef IPMMU_MMU_SUPPORT
+	bool	is_translated = false;
+#endif
 
 	if (copy_from_user(&tmp, (void __user *)in, sizeof(struct MM_PARAM))) {
 		pr_err("%s EFAULT\n", __func__);
@@ -616,7 +619,9 @@ static int mm_ioc_alloc(struct device *mm_dev,
 	}
 
 #ifdef IPMMU_MMU_SUPPORT
-	out->hard_addr = ipmmu_mmu_phys2virt(out->phy_addr);
+	out->hard_addr = ipmmu_mmu_phys2virt(out->phy_addr, &is_translated);
+	if (!is_translated)
+		return -EFAULT;
 #else
 	out->hard_addr = (unsigned int)out->phy_addr;
 #endif
@@ -697,6 +702,9 @@ static int mm_ioc_alloc_co(struct BM *pb, int __user *in, struct MM_PARAM *out)
 	unsigned long	nbits;
 	unsigned long	start_bit;
 	struct MM_PARAM	tmp;
+#ifdef IPMMU_MMU_SUPPORT
+	bool is_translated = false;
+#endif
 
 	if (copy_from_user(&tmp, in, sizeof(struct MM_PARAM))) {
 		pr_err("%s EFAULT\n", __func__);
@@ -724,7 +732,9 @@ static int mm_ioc_alloc_co(struct BM *pb, int __user *in, struct MM_PARAM *out)
 	out->phy_addr = pb->top_phy_addr + (start_bit << pb->order);
 
 #ifdef IPMMU_MMU_SUPPORT
-	out->hard_addr = ipmmu_mmu_phys2virt(out->phy_addr);
+	out->hard_addr = ipmmu_mmu_phys2virt(out->phy_addr, &is_translated);
+	if (!is_translated)
+		return -EFAULT;
 #else
 	out->hard_addr = (unsigned int)out->phy_addr;
 #endif
@@ -1950,7 +1960,7 @@ static void ipmmu_mmu_deinitialize(void)
 	__handle_registers(&ipmmumm, DO_IOUNMAP);
 }
 
-static unsigned int ipmmu_mmu_phys2virt(phys_addr_t paddr)
+static unsigned int ipmmu_mmu_phys2virt(phys_addr_t paddr, bool *is_translated)
 {
 	unsigned int	vaddr = 0;
 	int		section = 0;
@@ -1962,6 +1972,9 @@ static unsigned int ipmmu_mmu_phys2virt(phys_addr_t paddr)
 		    (paddr < ipmmu_mmu_trans_table[section] + SZ_1G)) {
 			vaddr = section * SZ_1G;
 			vaddr |= paddr & 0x3fffffff;
+
+			if (is_translated)
+				*is_translated = true;
 		}
 	}
 
