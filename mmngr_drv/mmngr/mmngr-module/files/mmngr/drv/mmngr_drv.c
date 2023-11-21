@@ -1169,7 +1169,7 @@ static int validate_memory_map(void)
 			"the kernel reserved size (0x%llx) for Multimedia.\n",
 			MM_OMXBUF_SIZE, mm_kernel_reserve_size);
 		pr_warn("Failed to initialize MMNGR.\n");
-		ret = -1;
+		ret = -EINVAL;
 	}
 
 #ifdef MMNGR_SSP_ENABLE
