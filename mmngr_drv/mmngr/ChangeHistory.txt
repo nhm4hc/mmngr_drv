@@ -1,0 +1,118 @@
+MMNGR v0.1
+	1. Initial Gen3 support.
+
+MMNGR v0.2
+	1. Remove unused macro MM_OMXBUF_MXI_ADDR.
+
+MMNGR v0.3
+	1. Change MMNGR driver into a DT-compatible driver.
+
+MMNGR v0.4
+	1. Add support for Lossy Decompression feature.
+
+MMNGR v0.5
+	1. Add support for Kriek board.
+	2. Fix sparse warning messages.
+
+MMNGR v0.6
+	1. Add IPMMU(PMB) support for memory allocation.
+
+MMNGR v0.7
+	1. Add IPMMU(PMB) registers backup/restore to support System Suspend-to-RAM.
+	2. Various fixes and improvement for MMNGR operation.
+	3. Update MIT license.
+
+MMNGR v0.8
+	1. Move duplicate definitions in user header files and driver header files
+           to common header files.
+
+MMNGR v0.9
+	1. Deal with dma-attrs.h removal in kernel 4.9.
+	2. Change method to get MMP reserved area.
+	3. Improve error handling in initialization flow.
+	4. Minor cleanup in source code comment and unused header file.
+	5. Correct the logic of virt2phy() function.
+
+MMNGR v0.10
+	1. Add lacking error handling for __handle_registers().
+	2. Re-order entry condition validation in init_lossy_info().
+	3. Add IPMMU support for H3 WS2.0.
+	4. Clean up source code and fix style warnings.
+
+MMNGR v0.11
+	1. Add UTLB for FCP-VI (VSPI) as PMB entry on H3 (WS1.x and WS2.0) and M3.
+	2. Add IPMMU(PMB) support for Lossy area.
+	3. Remove hardcoded number in Lossy processing.
+	4. Add function prototype declaration.
+
+MMNGR v0.12
+	1. Add IPMMU-VC0 setting for H3 ES2.0.
+	2. Add UTLB for FCP-VB (VSPB) as PMB entry on H3 WS1.x and M3.
+	3. Revert UTLB for FCP-VI (VSPI) as PMB entry on H3 ES2.0.
+	4. Change the translation policy in Lossy area on H3 ES2.0.
+
+MMNGR v0.13
+	1. Remove IPMMU(PMB) support due to hardware restriction.
+	2. Add IPMMU(MMU) support for memory allocation.
+	3. Fix compiler warnings.
+	4. Add System Suspend-to-RAM support for IPMMU(MMU).
+	5. Disable TLB function in IPMMU-VC0/VC1/VP0/VP1 due to hardware restriction.
+	6. Add IPMMU(MMU) support for SSP.
+
+MMNGR v1.0
+	1. Fix condition checking in create_l1_pgtable() function.
+	2. Improve coding style and readability.
+	3. Fix error message due to static variable initialization to false.
+	4. Add IPMMU function prototype declaration.
+
+MMNGR v1.1
+	1. Add IPMMU(MMU) support for R-Car M3N Ver1.0.
+
+MMNGR v1.2
+	1. Disable IPMMU TLB cache function in M3N Ver1.0 and Ver1.1 due to
+	   hardware restriction.
+	2. Fix GCC 7.2 warnings when build with W=1 option.
+	3. Use embedded function name in error messages.
+	4. Handle reserved bits in IMTTLBR properly.
+	5. Update IPMMU(MMU) initialize sequence.
+
+MMNGR v1.3
+	1. Add support for R-Car E3 with default and IPMMU(MMU) configuration.
+	2. Disable IPMMU TLB cache function in R-Car E3 due to hardware
+	   restriction.
+	3. Use const string for IPMMU and DT node name.
+	4. Add UL suffix for IPMMU base address.
+	5. Use signed integer type for return value in handle_registers.
+	6. Update IPMMU(MMU) deinitialize sequence.
+	7. Change the way of parsing reserved memory regions in DT.
+
+MMNGR v1.4
+	1. Disable IPMMU TLB cache function in selected SoC revision
+	2. Update CMA memory mapping for E3
+
+MMNGR v1.5
+	1. Fix static analysis warnings.
+
+MMNGR v1.6
+	1. Remove uncessary check when parsing reserved memory regions in DT
+	2. Disable IPMMU TLB cache function in R-Car E3 Ver.1.x due to
+	   hardware restriction.
+	3. Only disable TLB function of IPMMU-VC0 cache on E3 Ver.1.x
+	4. Add error handling for mm_probe() function.
+MMNGR v1.7
+	1. Add IPMMU(MMU) support for R-Car M3 Ver.3.0
+
+MMNGR v1.8
+	1.Remove cache snoop transaction for page table walk request
+
+MMNGR v1.9
+	1. Make sure IPMMU data for H3 Ver.1.x is set correctly
+	2. Don't register as BUS IOMMU if machine doesn't have IPMMU-VMSA
+	3. Add V3MSK board
+	4. Add kernelheap cached buffers support
+	5. Update DMA mapping header
+	6. Remove ioremap_nocache
+
+MMNGR v1.10
+	1. Update IPMMU(MMU) compatible for R8A77961 M3-W+
+	2. Add default coherent DMA mask

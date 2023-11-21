@@ -1,0 +1,40 @@
+MMNGRBUF v0.1
+	1. Initial Gen3 support.
+
+MMNGRBUF v0.2
+	1. Change MMNGRBUF driver into a DT-compatible driver.
+
+MMNGRBUF v0.3
+	1. Deal with dma_buf_ops changes in kernel v4.6.
+
+MMNGRBUF v0.4
+	1. Move duplicate definitions in user header files and driver header files
+           to common header files.
+
+MMNGRBUF v0.5
+	1. Minor cleanup in unused header file.
+
+MMNGRBUF v0.6
+	1. Add lacking error handling for close().
+
+MMNGRBUF v0.7
+	1. Add function prototype declaration.
+
+MMNGRBUF v1.0
+	1. Update to MMNGRBUF v1.0
+
+MMNGRBUF v1.1
+	1. Fix build error due to dma_ops_buf change in kernel version 4.14.
+	2. Use embedded function name in error messages.
+
+MMNGRBUF v1.2
+	1. Improve error handling in close() function.
+	2. Improve error handling for import phases.
+
+MMNGRBUF v1.3
+	1. Fix dmabuf refcount handling on mm_ioc_import_start() failure
+
+MMNGRBUF v1.4
+	1. Fix build errors in kernel version 5.4
+	2. Fix a race between close() and dmabuf_map_dma_buf() callbacks
+	3. Remove kernel dmabuf map/unmap hooks
