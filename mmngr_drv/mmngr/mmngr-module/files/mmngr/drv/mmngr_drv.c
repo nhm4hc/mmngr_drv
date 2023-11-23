@@ -644,9 +644,7 @@ static int mm_ioc_alloc(struct device *mm_dev,
 	new->addr = out->hard_addr;
 	new->size = out->size;
 
-	mutex_lock(&mlock);
 	list_add_tail(&new->list, &mm_alloc_list->head);
-	mutex_unlock(&mlock);
 
 	return ret;
 }
@@ -764,9 +762,7 @@ static int mm_ioc_alloc_co(struct BM *pb, int __user *in, struct MM_PARAM *out)
 	new->addr = out->hard_addr;
 	new->size = out->size;
 
-	mutex_lock(&mlock);
 	list_add_tail(&new->list, &mm_alloc_list->head);
-	mutex_unlock(&mlock);
 
 	return 0;
 }
@@ -1844,7 +1840,6 @@ static void mm_list_entry_delete(struct MM_PARAM *p)
 {
 	struct mm_paddr_list *tmp;
 
-	mutex_lock(&mlock);
 	if (!list_empty(&mm_alloc_list->head)) {
 		list_for_each_entry(tmp, &mm_alloc_list->head, list) {
 			pr_debug("tmp->addr: %llx, p->hard_addr: %x && tmp->size: %llx, p->size: %lx\n",
@@ -1857,8 +1852,6 @@ static void mm_list_entry_delete(struct MM_PARAM *p)
 			}
 		}
 	}
-
-	mutex_unlock(&mlock);
 }
 
 bool mmngr_validate_phys_addr(u64 phys_addr, u64 size)
